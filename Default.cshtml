@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Home Page";
+}
+
+<h3>We suggest the following:</h3>
+
+<div id="metafields"></div>
+<div id="title"></div>
+<div id="content"></div>
+<script src="~/Scripts/cosmicjs.browser.min.js"></script>
+<script>
+    var config = {
+        bucket: {
+          _id: '5a29909268732dee7f00000c',
+          slug: '5a1aa810-db81-11e7-b40c-0d0254b34181',
+          read_key: 'Iinb46jPQ5dz6snuWJJoDCAlLlXLLpXpxGMKnB3KU3xwblIRaV',
+          write_key: 'HAQdGksqZO5l1bdAhalL5VkjR5bFpUA6spBnt50zMZINBhtCqB'
+      }
+    };
+    Cosmic.getBucket(config, (err, res) => {
+        var object = res.objects;
+        console.log(object.length);
+      document.getElementById('title').innerHTML = object.title;
+      document.getElementById('content').innerHTML = object.content;
+      var metafields = object.metafields;
+      var items = '';
+      metafields.forEach(function(metafield){
+        items += '<h2>' + metafield.title + '</h2>';
+        items += '<img width="300" src="' + metafield.url + '"/>';
+        items += '<br><br>';
+      });
+      document.getElementById('metafields').innerHTML = items;
+    });
+</script>
